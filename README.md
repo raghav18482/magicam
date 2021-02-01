@@ -1,0 +1,2 @@
+# magicam
+open-cv +flask 
