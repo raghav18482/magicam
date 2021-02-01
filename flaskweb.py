@@ -5,6 +5,10 @@ import numpy as np
 
 app = Flask(__name__)
 
+@app.route('/')
+def upload_image():
+    return render_template('upload_image.html')
+
 camera = cv2.VideoCapture(0)
 def gen_frames():  
     while True:
@@ -83,9 +87,7 @@ def gen_magicam():
 def index():
     return render_template('index.html')
 
-@app.route('/')
-def upload_image():
-    return render_template('upload_image.html')
+
 
 @app.route('/video')
 def video():
@@ -101,4 +103,4 @@ def video_feed():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False)
