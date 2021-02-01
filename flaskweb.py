@@ -9,6 +9,24 @@ app = Flask(__name__)
 def upload_image():
     return render_template('upload_image.html')
 
+@app.route('/index.html')
+def index():
+    return render_template('index.html')
+
+
+
+@app.route('/video')
+def video():
+    return Response(gen_magicam(), mimetype='multipart/x-mixed-replace; boundary=frame')
+
+@app.route('/show_pic.html')
+def show_pic():
+    return render_template('show_pic.html')
+
+@app.route('/video_feed')
+def video_feed():
+    return Response(gen_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
+
 camera = cv2.VideoCapture(0)
 def gen_frames():  
     while True:
@@ -83,23 +101,7 @@ def gen_magicam():
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
 
-@app.route('/index.html')
-def index():
-    return render_template('index.html')
 
-
-
-@app.route('/video')
-def video():
-    return Response(gen_magicam(), mimetype='multipart/x-mixed-replace; boundary=frame')
-
-@app.route('/show_pic.html')
-def show_pic():
-    return render_template('show_pic.html')
-
-@app.route('/video_feed')
-def video_feed():
-    return Response(gen_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 
 if __name__ == "__main__":
