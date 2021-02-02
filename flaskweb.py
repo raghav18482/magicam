@@ -27,6 +27,19 @@ def show_pic():
 def video_feed():
     return Response(gen_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
+@app.route('/save_frame',methods=['GET','POST'])
+def save_frames():
+    while camera.isOpened():
+        ret, frame = camera.read() #reading from cam  ### read mobile cam using flutter
+        if request.method=='POST':
+            if ret:
+                   ###we will add flutter click button to capture image 
+                    # save the image
+                cv2.imwrite('image.jpg', frame)#### return clicked img to flutter project
+                break
+    return redirect('/')
+
+
 camera = cv2.VideoCapture(0)
 def gen_frames():  
     while True:
@@ -39,17 +52,7 @@ def gen_frames():
             yield (b'--frame\r\n'
                    b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')  # concat frame one by one and show result
 
-@app.route('/save_frame',methods=['GET','POST'])
-def save_frames():
-    while camera.isOpened():
-        ret, frame = camera.read() #reading from cam  ### read mobile cam using flutter
-        if request.method=='POST':
-            if ret:
-                   ###we will add flutter click button to capture image 
-                    # save the image
-                cv2.imwrite('image.jpg', frame)#### return clicked img to flutter project
-                break
-    return redirect('/')
+
 
 
 def magicam():
