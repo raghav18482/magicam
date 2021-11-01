@@ -1,5 +1,5 @@
 # magicam
-open-cv + flask 
+opencv + flask 
 
 # how to run
 -> clone it and write pip install requirements.txt
