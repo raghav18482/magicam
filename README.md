@@ -1,7 +1,7 @@
 # magicam
 open-cv + flask 
 
-#how to run
+# how to run
 -> clone it and write pip install requirements.txt
 -> python flaskweb.py
 
